@@ -1,0 +1,42 @@
+App:
+  name: "gin starter"
+  debug: true
+  url: "http://localhost:8080"
+  port: 8080
+  timezone: "Asia/Shanghai"
+  locale: "zh_CN"
+database:
+  connection: "mysql"
+  mysql:
+    host: "127.0.0.1"
+    port: "3306"
+    database: ""
+    username: ""
+    password: ""
+    charset: "utf8mb4"
+    max_idle_connections: 100
+    max_open_connections: 25
+    max_life_seconds: 300
+  sqlite:
+    database: "storage/database.db"
+log:
+  level: "debug"
+  type: "single"
+  filename: "storage/logs/logs.log"
+  max_size: 64
+  max_backup: 5
+  max_age: 30
+  compress: false
+  time_layout: "2006-01-02 15:04:05"
+mail:
+  default: "smtp"
+  mailers:
+    smtp:
+      transport: "smtp"
+      host: "smtp.mailgun.org"
+      port: 587
+      encryption: tls
+      username: ""
+      password: ""
+      timeout: 30
+      auth_mode:

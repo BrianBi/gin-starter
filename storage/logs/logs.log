@@ -1,0 +1,8 @@
+{"level":"info","time":"2022-02-17 17:16:07","caller":"cmd/server.go:70","msg":"this is test","domain":"gin starter[dev]"}
+{"level":"info","time":"2022-02-17 17:16:07","caller":"cmd/server.go:71","msg":"storage/logs/logs.log","domain":"gin starter[dev]"}
+{"level":"info","time":"2022-02-17 17:16:07","caller":"cmd/server.go:53","msg":"logger onstart..","domain":"gin starter[dev]"}
+{"level":"info","time":"2022-02-17 17:16:08","caller":"cmd/server.go:57","msg":"logger onstop..","domain":"gin starter[dev]"}
+{"level":"info","time":"2022-02-17 17:33:36","caller":"bootstrap/logger.go:51","msg":"this is test","domain":"gin starter[dev]"}
+{"level":"info","time":"2022-02-17 17:33:36","caller":"bootstrap/logger.go:52","msg":"storage/logs/logs.log","domain":"gin starter[dev]"}
+{"level":"info","time":"2022-02-17 17:33:36","caller":"bootstrap/logger.go:34","msg":"logger on start...","domain":"gin starter[dev]"}
+{"level":"info","time":"2022-02-17 17:33:37","caller":"bootstrap/logger.go:38","msg":"logger on stop...","domain":"gin starter[dev]"}
