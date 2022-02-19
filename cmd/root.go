@@ -1,7 +1,8 @@
 package cmd
 
 import (
-	"github.com/brianbi/gin-starter/config"
+	"errors"
+	"github.com/brianbi/gin-starter/cmd/server"
 	"github.com/spf13/cobra"
 	"os"
 )
@@ -10,15 +11,25 @@ var (
 	Version = "1.0.0"
 
 	rootCmd = &cobra.Command{
-		Use:     "go-starter",
-		Version: Version,
-		Short:   "go-starter Management CLI",
+		Use:    "gin-starter",
+		Short:  "gin-starter Management CLI",
+		Version:	Version,
+		SilenceUsage: true,
+		Long:	`gin-admin`,
+		Args: func(cmd *cobra.Command, args []string) error {
+			if len(args) < 1 {
+				return errors.New(
+					"requires at least one arg, you can view the available parameters through `--help`",
+				)
+			}
+			return nil
+		},
+		PersistentPreRunE: func(*cobra.Command, []string) error { return nil },
 		Run: func(cmd *cobra.Command, args []string) {
-			httpCmd.Run(cmd, args)
+			// pass
 		},
 	}
 
-	configFile string
 )
 
 func Execute() {
@@ -29,10 +40,6 @@ func Execute() {
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
-	rootCmd.AddCommand(httpCmd)
+	rootCmd.AddCommand(server.HttpServerCmd)
 }
 
-func initConfig() {
-	config.Initialize(configFile)
-}

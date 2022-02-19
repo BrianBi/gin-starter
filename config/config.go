@@ -22,24 +22,25 @@ type Configuration struct {
 
 var (
 	v 			= viper.New()
-	config 		= new(Configuration)
 	configPath 	= "./config/"
 	configType 	= "yaml"
 	configName  = "config"
+	configFile  = configPath + configName + "." + configType
 )
 
-func Initialize(filePath string) Configuration {
-	if len(filePath) == 0 {
+func NewConfiguration() *Configuration {
+	config := new(Configuration)
+	if len(configFile) == 0 {
 		v.SetConfigName(configName)
 		v.SetConfigType(configType)
 		v.AddConfigPath(configPath)
-		filePath = configPath + configName + "." + configType
+		configFile = configPath + configName + "." + configType
 	} else {
-		v.SetConfigFile(filePath)
+		v.SetConfigFile(configFile)
 	}
 
-	if _, ok := file.IsExists(filePath); !ok {
-		panic("config file: " + filePath + " not found")
+	if _, ok := file.IsExists(configFile); !ok {
+		panic("config file: " + configFile + " not found")
 	}
 
 	v.AutomaticEnv()
@@ -60,12 +61,17 @@ func Initialize(filePath string) Configuration {
 		panic(err)
 	}
 
-	return *config
+	return config
 }
 
-// GetConfig struct
-func GetConfig() Configuration {
-	return *config
+// SetConfigPath set config file path
+func SetConfigPath(filePath string) {
+	if len(filePath) > 0 {
+		if _, ok := file.IsExists(filePath); !ok {
+			panic("config filepath: " + filePath + " does not exist")
+		}
+		configFile = filePath
+	}
 }
 
 // get current package value by path
@@ -82,41 +88,41 @@ func getValue(path string, value ...interface{}) interface{} {
 }
 
 // Get get config value to string
-func Get(path string, value ...interface{}) string {
-	return GetString(path, value...)
+func (config *Configuration) Get(path string, value ...interface{}) string {
+	return config.GetString(path, value...)
 }
 
 // GetString Obtain the configuration information of type string
-func GetString(path string, value ...interface{}) string {
+func (config *Configuration) GetString(path string, value ...interface{}) string {
 	return cast.ToString(getValue(path, value...))
 }
 
 // GetInt Obtain the configuration information of type int
-func GetInt(path string, value ...interface{}) int {
+func (config *Configuration) GetInt(path string, value ...interface{}) int {
 	return cast.ToInt(getValue(path, value...))
 }
 
 // GetFloat64 Obtain the configuration information of type Float64
-func GetFloat64(path string, value ...interface{}) float64 {
+func (config *Configuration) GetFloat64(path string, value ...interface{}) float64 {
 	return cast.ToFloat64(getValue(path, value...))
 }
 
 // GetInt64 Obtain the configuration information of type Int64
-func GetInt64(path string, value ...interface{}) int64 {
+func (config *Configuration) GetInt64(path string, value ...interface{}) int64 {
 	return cast.ToInt64(getValue(path, value...))
 }
 
 // GetUint Obtain the configuration information of type Uint
-func GetUint(path string, value ...interface{}) uint {
+func (config *Configuration) GetUint(path string, value ...interface{}) uint {
 	return cast.ToUint(getValue(path, value...))
 }
 
 // GetBool Obtain the configuration information of type Bool
-func GetBool(path string, value ...interface{}) bool {
+func (config *Configuration) GetBool(path string, value ...interface{}) bool {
 	return cast.ToBool(getValue(path, value...))
 }
 
 // GetStringMapString get structural data
-func GetStringMapString(path string) map[string]string {
+func (config *Configuration) GetStringMapString(path string) map[string]string {
 	return v.GetStringMapString(path)
 }
